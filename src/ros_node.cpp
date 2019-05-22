@@ -16,9 +16,9 @@ ros_node::ros_node(interface* device_interface, int argc, char **argv)
     // Read parameters.
     ros::NodeHandle private_node("~");
     int param_gpio;
-    private_node.param<int>("proximity/gpio", param_gpio, 0);
+    private_node.param<int>("gpio_pin", param_gpio, 0);
     double param_publish_rate;
-    private_node.param<double>("proximity/rate", param_publish_rate, 30);
+    private_node.param<double>("publish_rate", param_publish_rate, 30);
 
     // Set up the publisher.
     ros_node::m_publisher = ros_node::m_node->advertise<std_msgs::Bool>("proximity", 10);
