@@ -15,8 +15,8 @@ ros_node::ros_node(interface* device_interface, int argc, char **argv)
 
     // Read parameters.
     ros::NodeHandle private_node("~");
-    unsigned int param_gpio;
-    private_node.param<unsigned int>("proximity/gpio", param_gpio, 0);
+    int param_gpio;
+    private_node.param<int>("proximity/gpio", param_gpio, 0);
     double param_publish_rate;
     private_node.param<double>("proximity/rate", param_publish_rate, 30);
 
