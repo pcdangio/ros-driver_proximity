@@ -58,13 +58,11 @@ bool rpi_interface::read_state()
     {
     case 0:
     {
-        // Logic low means proximity detected
-        return true;
+        return false;
     }
     case 1:
     {
-        // Logic high means proximity not detected
-        return false;
+        return true;
     }
     case PI_BAD_GPIO:
     {
