@@ -6,7 +6,7 @@
 #include "interface.h"
 
 ///
-/// \brief A Raspberry Pi interface for the GP2Y0D8 distance sensor.
+/// \brief A Raspberry Pi interface for a digital proximity sensor.
 ///
 class rpi_interface : public interface
 {
@@ -29,7 +29,7 @@ private:
     ///
     int m_pigpiod_handle;
     ///
-    /// \brief mInputPin Stores the input pin that the GP2Y0D8 is connected to.
+    /// \brief mInputPin Stores the input pin that the sensor is connected to.
     ///
     unsigned int m_gpio_pin;
 };

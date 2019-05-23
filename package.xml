@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>interface_gp2y0d8</name>
+  <name>interface_proximity</name>
   <version>0.1.0</version>
-  <description>The interface_gp2y0d8 package provides a ROS interface to the Sharp GP2Y0D8 proximity sensor.</description>
+  <description>The interface_proximity package provides a ROS interface for a digital proximity sensor.</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->

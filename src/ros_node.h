@@ -7,7 +7,7 @@
 #include "interface.h"
 
 ///
-/// \brief Implements the ROS Node for the GP2Y0D8 interface.
+/// \brief Implements the ROS Node as an interface for a digital proximity sensor.
 ///
 class ros_node
 {
