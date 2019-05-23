@@ -149,6 +149,12 @@ if(pigpiod)
       ${catkin_LIBRARIES}
       ${pigpiod}
     )
+    ## Mark executables and/or libraries for installation
+    install(TARGETS ${PROJECT_NAME}_rpi_node
+      ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+      LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+      RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+    )
 else()
     message(WARNING "PIGPIO not found. Skipping rpi_node.")
 endif()
