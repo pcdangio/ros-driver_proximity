@@ -19,6 +19,7 @@ ros_node::ros_node(interface* device_interface, int argc, char **argv)
     private_node.param<int>("gpio_pin", param_gpio, 0);
     double param_publish_rate;
     private_node.param<double>("publish_rate", param_publish_rate, 30);
+    private_node.param<bool>("invert_output", ros_node::p_invert_output, false);
 
     // Set up the publisher.
     ros_node::m_publisher = ros_node::m_node->advertise<std_msgs::Bool>("proximity", 10);
@@ -29,7 +30,7 @@ ros_node::ros_node(interface* device_interface, int argc, char **argv)
     // Initialize the interface.
     try
     {
-        ros_node::m_interface->initialize(param_gpio);
+        ros_node::m_interface->initialize(static_cast<unsigned int>(param_gpio));
     }
     catch (std::exception& e)
     {
@@ -49,7 +50,8 @@ void ros_node::spin()
     while(ros::ok())
     {
         std_msgs::Bool message;
-        message.data = ros_node::m_interface->read_state();
+        // Use XOR to invert reading if necessary.
+        message.data = ros_node::p_invert_output ^ ros_node::m_interface->read_state();
         ros_node::m_publisher.publish(message);
         ros_node::m_rate->sleep();
     }

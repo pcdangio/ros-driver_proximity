@@ -43,6 +43,10 @@ private:
     /// \brief m_rate The node's spin rate.
     ///
     ros::Rate* m_rate;
+    ///
+    /// \brief p_invert_output A parameter indicating if the output of the sensor should be inverted.
+    ///
+    bool p_invert_output;
 };
 
 #endif // ROS_NODE_H
