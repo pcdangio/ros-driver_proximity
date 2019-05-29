@@ -1,20 +1,20 @@
-/// \file interface.h
-/// \brief Defines the interface class.
-#ifndef INTERFACE_H
-#define INTERFACE_H
+/// \file driver.h
+/// \brief Defines the driver class.
+#ifndef DRIVER_H
+#define DRIVER_H
 
 #include <stdexcept>
 
 ///
-/// \brief The hardware abstracted base definition of the sensor's hardware interface.
+/// \brief The hardware abstracted base definition of the sensor's hardware driver.
 ///
-class interface
+class driver
 {
 public:
     ///
-    /// \brief ~interface Pure virtual destructor.
+    /// \brief ~driver Pure virtual destructor.
     ///
-    virtual ~interface() = 0;
+    virtual ~driver() = 0;
 
     ///
     /// \brief initialize Initializes the GPIO input pin that the sensor is connected to.
@@ -29,4 +29,4 @@ public:
     virtual bool read_state() = 0;
 };
 
-#endif // INTERFACE_H
+#endif // DRIVER_H

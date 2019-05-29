@@ -1,13 +1,13 @@
 #include "ros_node.h"
 #include <std_msgs/Bool.h>
 
-ros_node::ros_node(interface* device_interface, int argc, char **argv)
+ros_node::ros_node(driver* device_driver, int argc, char **argv)
 {
-    // Take ownership of the device interface.
-    ros_node::m_interface = device_interface;
+    // Take ownership of the device driver.
+    ros_node::m_driver = device_driver;
 
     // Initialize the node.
-    ros::init(argc, argv, "interface_gp2y0d8");
+    ros::init(argc, argv, "driver_gp2y0d8");
 
     // Get the node's handle.
     // All devices should publish to generic device namespaces.
@@ -27,10 +27,10 @@ ros_node::ros_node(interface* device_interface, int argc, char **argv)
     // Set the publishing rate.
     ros_node::m_rate = new ros::Rate(param_publish_rate);
 
-    // Initialize the interface.
+    // Initialize the driver.
     try
     {
-        ros_node::m_interface->initialize(static_cast<unsigned int>(param_gpio));
+        ros_node::m_driver->initialize(static_cast<unsigned int>(param_gpio));
     }
     catch (std::exception& e)
     {
@@ -51,7 +51,7 @@ void ros_node::spin()
     {
         std_msgs::Bool message;
         // Use XOR to invert reading if necessary.
-        message.data = ros_node::p_invert_output ^ ros_node::m_interface->read_state();
+        message.data = ros_node::p_invert_output ^ ros_node::m_driver->read_state();
         ros_node::m_publisher.publish(message);
         ros_node::m_rate->sleep();
     }

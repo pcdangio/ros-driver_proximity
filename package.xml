@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>interface_proximity</name>
+  <name>driver_proximity</name>
   <version>0.1.0</version>
-  <description>The interface_proximity package provides a ROS interface for a digital proximity sensor.</description>
+  <description>The driver_proximity package provides a ROS driver for a digital proximity sensor.</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/interface-gp2y0d8</url> -->
+  <!-- <url type="website">http://wiki.ros.org/driver-gp2y0d8</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->

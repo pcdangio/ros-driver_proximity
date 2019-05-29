@@ -1,25 +1,25 @@
-#include "rpi_interface.h"
+#include "rpi_driver.h"
 
 #include <pigpiod_if2.h>
 
-rpi_interface::rpi_interface()
+rpi_driver::rpi_driver()
 {
     // Connect to the pigpio daemon.
-    rpi_interface::m_pigpiod_handle = pigpio_start(nullptr, nullptr);
+    rpi_driver::m_pigpiod_handle = pigpio_start(nullptr, nullptr);
 
     // Set default GPIO pin.
-    rpi_interface::m_gpio_pin = 0;
+    rpi_driver::m_gpio_pin = 0;
 }
-rpi_interface::~rpi_interface()
+rpi_driver::~rpi_driver()
 {
     // Disconnect from the pigpio daemon.
-    pigpio_stop(rpi_interface::m_pigpiod_handle);
+    pigpio_stop(rpi_driver::m_pigpiod_handle);
 }
 
-void rpi_interface::initialize(unsigned int gpio_pin)
+void rpi_driver::initialize(unsigned int gpio_pin)
 {
     // Set the pin as an input pin.
-    int result = set_mode(rpi_interface::m_pigpiod_handle, gpio_pin, PI_INPUT);
+    int result = set_mode(rpi_driver::m_pigpiod_handle, gpio_pin, PI_INPUT);
 
     // Handle the result.
     switch(result)
@@ -27,7 +27,7 @@ void rpi_interface::initialize(unsigned int gpio_pin)
     case 0:
     {
         // Success.  Store the gpio pin internally.
-        rpi_interface::m_gpio_pin = gpio_pin;
+        rpi_driver::m_gpio_pin = gpio_pin;
         break;
     }
     case PI_BAD_GPIO:
@@ -48,10 +48,10 @@ void rpi_interface::initialize(unsigned int gpio_pin)
     }
     }
 }
-bool rpi_interface::read_state()
+bool rpi_driver::read_state()
 {
     // Read the state.
-    int result = gpio_read(rpi_interface::m_pigpiod_handle, rpi_interface::m_gpio_pin);
+    int result = gpio_read(rpi_driver::m_pigpiod_handle, rpi_driver::m_gpio_pin);
 
     // Handle the result.
     switch(result)

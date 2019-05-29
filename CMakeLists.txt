@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(interface_proximity)
+project(driver_proximity)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -103,7 +103,7 @@ find_library(pigpiod pigpiod_if2)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES interface-gp2y0d8
+#  LIBRARIES driver-gp2y0d8
 #  CATKIN_DEPENDS roscpp
 #  DEPENDS system_lib
 )
@@ -121,7 +121,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/interface-gp2y0d8.cpp
+#   src/${PROJECT_NAME}/driver-gp2y0d8.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -129,13 +129,13 @@ include_directories(
 ## either from message generation or dynamic reconfigure
 # add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-# Build for RPi Interface
+# Build for RPi driver
 if(pigpiod)
     message(STATUS "PIGPIO found. Building rpi_node.")
     ## Declare a C++ executable
     ## With catkin_make all packages are built within a single CMake context
     ## The recommended prefix ensures that target names across packages don't collide
-    add_executable(${PROJECT_NAME}_rpi_node src/main_rpi.cpp src/ros_node.cpp src/rpi_interface.cpp src/interface.cpp)
+    add_executable(${PROJECT_NAME}_rpi_node src/main_rpi.cpp src/ros_node.cpp src/rpi_driver.cpp src/driver.cpp)
     ## Rename C++ executable without prefix
     ## The above recommended prefix causes long target names, the following renames the
     ## target back to the shorter version for ease of user use
@@ -201,7 +201,7 @@ endif()
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_interface-gp2y0d8.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_driver-gp2y0d8.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
