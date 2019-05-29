@@ -1,5 +1,5 @@
 #include "ros_node.h"
-#include <std_msgs/Bool.h>
+#include <sensor_msgs_ext/ProximityState.h>
 
 ros_node::ros_node(driver* device_driver, int argc, char **argv)
 {
@@ -22,7 +22,7 @@ ros_node::ros_node(driver* device_driver, int argc, char **argv)
     private_node.param<bool>("invert_output", ros_node::p_invert_output, false);
 
     // Set up the publisher.
-    ros_node::m_publisher = ros_node::m_node->advertise<std_msgs::Bool>("proximity", 10);
+    ros_node::m_publisher = ros_node::m_node->advertise<sensor_msgs_ext::ProximityState>("state", 10);
 
     // Set the publishing rate.
     ros_node::m_rate = new ros::Rate(param_publish_rate);
@@ -49,9 +49,11 @@ void ros_node::spin()
 {
     while(ros::ok())
     {
-        std_msgs::Bool message;
+        sensor_msgs_ext::ProximityState message;
+        message.header.stamp = ros::Time::now();
+        message.header.frame_id = ros::this_node::getName();
         // Use XOR to invert reading if necessary.
-        message.data = ros_node::p_invert_output ^ ros_node::m_driver->read_state();
+        message.state = ros_node::p_invert_output ^ ros_node::m_driver->read_state();
         ros_node::m_publisher.publish(message);
         ros_node::m_rate->sleep();
     }

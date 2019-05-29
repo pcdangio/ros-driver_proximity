@@ -14,7 +14,9 @@ SOURCES += \
     src/ros_node.cpp \
     src/rpi_driver.cpp
 
-INCLUDEPATH += /opt/ros/melodic/include
+INCLUDEPATH += \
+    /opt/ros/melodic/include \
+    ../../devel/include
 
 DISTFILES += \
     CMakeLists.txt \

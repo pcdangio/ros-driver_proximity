@@ -9,6 +9,7 @@ add_compile_options(-std=c++11)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  sensor_msgs_ext
 )
 
 ## System dependencies are found with CMake's conventions
@@ -155,6 +156,9 @@ if(pigpiod)
       LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
       RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
     )
+    ## Add cmake target dependencies of the executable
+    ## same as for the library above
+    add_dependencies(${PROJECT_NAME}_rpi_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 else()
     message(WARNING "PIGPIO not found. Skipping rpi_node.")
 endif()
