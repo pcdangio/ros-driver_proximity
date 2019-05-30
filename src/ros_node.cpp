@@ -1,5 +1,5 @@
 #include "ros_node.h"
-#include <sensor_msgs_ext/ProximityState.h>
+#include <sensor_msgs_ext/Proximity.h>
 
 ros_node::ros_node(driver* device_driver, int argc, char **argv)
 {
@@ -20,9 +20,13 @@ ros_node::ros_node(driver* device_driver, int argc, char **argv)
     double param_publish_rate;
     private_node.param<double>("publish_rate", param_publish_rate, 30);
     private_node.param<bool>("invert_output", ros_node::p_invert_output, false);
+    private_node.param<int>("radiation_type", ros_node::p_radiation_type, 255);
+    private_node.param<float>("min_range", ros_node::p_min_range, std::numeric_limits<float>::quiet_NaN());
+    private_node.param<float>("max_range", ros_node::p_max_range, std::numeric_limits<float>::quiet_NaN());
+    private_node.param<float>("field_of_view", ros_node::p_fov, std::numeric_limits<float>::quiet_NaN());
 
     // Set up the publisher.
-    ros_node::m_publisher = ros_node::m_node->advertise<sensor_msgs_ext::ProximityState>("state", 10);
+    ros_node::m_publisher = ros_node::m_node->advertise<sensor_msgs_ext::Proximity>("proximity", 10);
 
     // Set the publishing rate.
     ros_node::m_rate = new ros::Rate(param_publish_rate);
@@ -49,11 +53,18 @@ void ros_node::spin()
 {
     while(ros::ok())
     {
-        sensor_msgs_ext::ProximityState message;
+        sensor_msgs_ext::Proximity message;
+        // Populate header.
         message.header.stamp = ros::Time::now();
         message.header.frame_id = ros::this_node::getName();
+        // Populate sensor characteristics.
+        message.radiation_type = static_cast<unsigned char>(ros_node::p_radiation_type);
+        message.min_range = ros_node::p_min_range;
+        message.max_range = ros_node::p_max_range;
+        message.field_of_view = ros_node::p_fov;
+        // Populate state.
         // Use XOR to invert reading if necessary.
-        message.state = ros_node::p_invert_output ^ ros_node::m_driver->read_state();
+        message.proximity = ros_node::p_invert_output ^ ros_node::m_driver->read_state();
         ros_node::m_publisher.publish(message);
         ros_node::m_rate->sleep();
     }

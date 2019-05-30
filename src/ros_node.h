@@ -47,6 +47,22 @@ private:
     /// \brief p_invert_output A parameter indicating if the output of the sensor should be inverted.
     ///
     bool p_invert_output;
+    ///
+    /// \brief p_radiation_type A parameter indicating the radiation type of the proximity sensor.
+    ///
+    int p_radiation_type;
+    ///
+    /// \brief p_min_range A parameter indicating the minimum detection range of the proximity sensor.
+    ///
+    float p_min_range;
+    ///
+    /// \brief p_max_range A parameter indicating the maximum detection range of the proximity sensor.
+    ///
+    float p_max_range;
+    ///
+    /// \brief p_fov A parameter indicating the maximum field of view of the proximity sensor.
+    ///
+    float p_fov;
 };
 
 #endif // ROS_NODE_H
