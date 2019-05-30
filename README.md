@@ -22,7 +22,7 @@ The driver_proximity package has been tested under [ROS] Melodic and Ubuntu 18.0
 #### Dependencies
 
 - [Robot Operating System (ROS)](http://wiki.ros.org) (middleware for robotics)
-- [sensor_msgs_ext](https://github.com/pcdangio/ros-sensor_msgs_ext) (extension of sensor_msgs for encoders)
+- [sensor_msgs_ext](https://github.com/pcdangio/ros-sensor_msgs_ext) (extension of sensor_msgs)
 - [pigpio](http://abyz.me.uk/rpi/pigpio/) (Raspberry PI I/O)
 
 #### Building
