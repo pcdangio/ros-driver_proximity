@@ -53,19 +53,27 @@ void ros_node::spin()
 {
     while(ros::ok())
     {
-        sensor_msgs_ext::Proximity message;
-        // Populate header.
-        message.header.stamp = ros::Time::now();
-        message.header.frame_id = ros::this_node::getName();
-        // Populate sensor characteristics.
-        message.radiation_type = static_cast<unsigned char>(ros_node::p_radiation_type);
-        message.min_range = ros_node::p_min_range;
-        message.max_range = ros_node::p_max_range;
-        message.field_of_view = ros_node::p_fov;
-        // Populate state.
-        // Use XOR to invert reading if necessary.
-        message.proximity = ros_node::p_invert_output ^ ros_node::m_driver->read_state();
-        ros_node::m_publisher.publish(message);
+        try
+        {
+            sensor_msgs_ext::Proximity message;
+            // Populate header.
+            message.header.stamp = ros::Time::now();
+            message.header.frame_id = ros::this_node::getName();
+            // Populate sensor characteristics.
+            message.radiation_type = static_cast<unsigned char>(ros_node::p_radiation_type);
+            message.min_range = ros_node::p_min_range;
+            message.max_range = ros_node::p_max_range;
+            message.field_of_view = ros_node::p_fov;
+            // Populate state.
+            // Use XOR to invert reading if necessary.
+            message.proximity = ros_node::p_invert_output ^ ros_node::m_driver->read_state();
+            ros_node::m_publisher.publish(message);
+        }
+        catch(std::exception& e)
+        {
+            ROS_WARN_STREAM(e.what());
+        }
+
         ros_node::m_rate->sleep();
     }
 }
