@@ -1,4 +1,4 @@
-# driver_quad_encoder
+# driver_proximity
 
 ## Overview
 
