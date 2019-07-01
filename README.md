@@ -51,7 +51,7 @@ For example, to run the node using a driver for a Raspberry Pi:
 A Raspberry Pi driver for a digital proximity sensor.  Ensure that the pigpio daemon is running before starting this node.
 
 #### Published Topics
-* **`proximity`** ([sensor_msgs_ext/Proximity])
+* **`proximity/proximity`** ([sensor_msgs_ext/Proximity])
         The current measurement given by the proximity sensor.
 
 
