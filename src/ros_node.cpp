@@ -7,10 +7,11 @@ ros_node::ros_node(driver* device_driver, int argc, char **argv)
     ros_node::m_driver = device_driver;
 
     // Initialize the node.
-    ros::init(argc, argv, "driver_proximity");
+    ros::init(argc, argv, "driver_gp2y0d8");
 
     // Get the node's handle.
-    ros_node::m_node = new ros::NodeHandle();
+    // All devices should publish to generic device namespaces.
+    ros_node::m_node = new ros::NodeHandle("proximity");
 
     // Read parameters.
     ros::NodeHandle private_node("~");
