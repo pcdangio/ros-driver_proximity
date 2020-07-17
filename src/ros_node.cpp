@@ -1,5 +1,5 @@
 #include "ros_node.h"
-#include <sensor_msgs_ext/Proximity.h>
+#include <sensor_msgs_ext/proximity.h>
 
 ros_node::ros_node(driver* device_driver, int argc, char **argv)
 {
@@ -26,7 +26,7 @@ ros_node::ros_node(driver* device_driver, int argc, char **argv)
     private_node.param<float>("field_of_view", ros_node::p_fov, std::numeric_limits<float>::quiet_NaN());
 
     // Set up the publisher.
-    ros_node::m_publisher = ros_node::m_node->advertise<sensor_msgs_ext::Proximity>("proximity", 10);
+    ros_node::m_publisher = ros_node::m_node->advertise<sensor_msgs_ext::proximity>("proximity", 10);
 
     // Set the publishing rate.
     ros_node::m_rate = new ros::Rate(param_publish_rate);
@@ -55,10 +55,9 @@ void ros_node::spin()
     {
         try
         {
-            sensor_msgs_ext::Proximity message;
+            sensor_msgs_ext::proximity message;
             // Populate header.
-            message.header.stamp = ros::Time::now();
-            message.header.frame_id = ros::this_node::getName();
+            message.frame_id = ros::this_node::getName();
             // Populate sensor characteristics.
             message.radiation_type = static_cast<unsigned char>(ros_node::p_radiation_type);
             message.min_range = ros_node::p_min_range;
