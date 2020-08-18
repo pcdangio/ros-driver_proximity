@@ -1,6 +1,7 @@
 #include "ros_node.h"
 #include <sensor_msgs_ext/proximity.h>
 
+// CONSTRUCTORS
 ros_node::ros_node(driver* device_driver, int argc, char **argv)
 {
     // Take ownership of the device driver.
@@ -26,6 +27,9 @@ ros_node::ros_node(driver* device_driver, int argc, char **argv)
     // Set up the publisher.
     ros_node::m_publisher = ros_node::m_node->advertise<sensor_msgs_ext::proximity>("proximity", 10);
 
+    // Set up the configuration service.
+    ros_node::m_service_get_cfg = ros_node::m_node->advertiseService("get_configuration", &ros_node::service_get_cfg, this);
+
     // Set the publishing rate.
     ros_node::m_rate = new ros::Rate(param_publish_rate);
 
@@ -40,13 +44,13 @@ ros_node::ros_node(driver* device_driver, int argc, char **argv)
         ros::shutdown();
     }
 }
-
 ros_node::~ros_node()
 {
     delete ros_node::m_rate;
     delete ros_node::m_node;
 }
 
+// METHODS
 void ros_node::spin()
 {
     while(ros::ok())
@@ -54,13 +58,6 @@ void ros_node::spin()
         try
         {
             sensor_msgs_ext::proximity message;
-            // Populate header.
-            message.frame_id = ros::this_node::getName();
-            // Populate sensor characteristics.
-            message.radiation_type = static_cast<unsigned char>(ros_node::p_radiation_type);
-            message.min_range = ros_node::p_min_range;
-            message.max_range = ros_node::p_max_range;
-            message.field_of_view = ros_node::p_fov;
             // Populate state.
             // Use XOR to invert reading if necessary.
             message.proximity = ros_node::p_invert_output ^ ros_node::m_driver->read_state();
@@ -68,9 +65,21 @@ void ros_node::spin()
         }
         catch(std::exception& e)
         {
-            ROS_WARN_STREAM(e.what());
+            ROS_ERROR_STREAM("failed to read state from sensor: (" << e.what() << ")");
         }
 
         ros_node::m_rate->sleep();
     }
+}
+
+// SERVICES
+bool ros_node::service_get_cfg(sensor_msgs_ext::get_proximity_configurationRequest& request, sensor_msgs_ext::get_proximity_configurationResponse& response)
+{
+    // Populate sensor configuration.
+    response.radiation_type = static_cast<uint8_t>(ros_node::p_radiation_type);
+    response.min_range = ros_node::p_min_range;
+    response.max_range = ros_node::p_max_range;
+    response.field_of_view = ros_node::p_fov;
+
+    return true;
 }
