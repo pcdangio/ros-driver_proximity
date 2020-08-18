@@ -51,8 +51,12 @@ For example, to run the node using a driver for a Raspberry Pi:
 A Raspberry Pi driver for a digital proximity sensor.  Ensure that the pigpio daemon is running before starting this node.
 
 #### Published Topics
-* **`proximity/proximity`** ([sensor_msgs_ext/Proximity])
+* **`proximity/proximity`** ([sensor_msgs_ext/proximity](https://github.com/pcdangio/ros-sensor_msgs_ext/blob/master/msg/proximity.msg))
         The current measurement given by the proximity sensor.
+
+#### Services
+* **`proximity/get_configuration`** ([sensor_msgs_ext/get_proximity_configuration](https://github.com/pcdangio/ros-sensor_msgs_ext/blob/master/msg/get_proximity_configuration.msg))
+        Retrieves the configuration of the sensor.
 
 
 #### Parameters
@@ -61,7 +65,7 @@ A Raspberry Pi driver for a digital proximity sensor.  Ensure that the pigpio da
 
         The GPIO input pin connected to the digital proximity sensor.
 
-* **`publish_rate`** (double, default: 30)
+* **`~/publish_rate`** (double, default: 30)
 
         The rate (in Hz) to publish ProximityState messages.
 
