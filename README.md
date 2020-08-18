@@ -38,11 +38,11 @@ To build from source, clone the latest version from this repository into your ca
 
 Run any of the driver nodes with (where xxx is the driver type):
 
-        rosrun driver_proximity xxx_node
+        rosrun driver_proximity driver_proximity_xxx
 
 For example, to run the node using a driver for a Raspberry Pi:
 
-        rosrun driver_proximity rpi_node
+        rosrun driver_proximity driver_proximity_rpi
 
 ## Nodes
 
