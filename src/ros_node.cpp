@@ -15,15 +15,13 @@ ros_node::ros_node(driver* device_driver, int argc, char **argv)
 
     // Read parameters.
     ros::NodeHandle private_node("~");
-    int param_gpio;
-    private_node.param<int>("gpio_pin", param_gpio, 0);
-    double param_publish_rate;
-    private_node.param<double>("publish_rate", param_publish_rate, 30);
-    private_node.param<bool>("invert_output", ros_node::p_invert_output, false);
-    private_node.param<int>("radiation_type", ros_node::p_radiation_type, 255);
-    private_node.param<float>("min_range", ros_node::p_min_range, std::numeric_limits<float>::quiet_NaN());
-    private_node.param<float>("max_range", ros_node::p_max_range, std::numeric_limits<float>::quiet_NaN());
-    private_node.param<float>("field_of_view", ros_node::p_fov, std::numeric_limits<float>::quiet_NaN());
+    int param_gpio = private_node.param<int>("gpio_pin", 0);
+    double param_publish_rate = private_node.param<double>("publish_rate", 30);
+    ros_node::p_invert_output = private_node.param<bool>("invert_output", false);
+    ros_node::p_radiation_type = private_node.param<int>("radiation_type", 255);
+    ros_node::p_min_range = private_node.param<float>("min_range", std::numeric_limits<float>::quiet_NaN());
+    ros_node::p_max_range = private_node.param<float>("max_range", std::numeric_limits<float>::quiet_NaN());
+    ros_node::p_fov = private_node.param<float>("field_of_view", std::numeric_limits<float>::quiet_NaN());
 
     // Set up the publisher.
     ros_node::m_publisher = ros_node::m_node->advertise<sensor_msgs_ext::proximity>("proximity", 10);
@@ -38,7 +36,7 @@ ros_node::ros_node(driver* device_driver, int argc, char **argv)
     }
     catch (std::exception& e)
     {
-        ROS_FATAL_STREAM(e.what());
+        ROS_FATAL_STREAM("failed to initialize driver (" << e.what() << ")");
         ros::shutdown();
     }
 }
